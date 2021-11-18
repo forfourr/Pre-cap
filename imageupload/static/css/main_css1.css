@@ -3,7 +3,7 @@
     background-color: rgb(20, 20, 22);
     background-repeat: no-repeat;
     color: white;
-    font-family: Vernada;
+    font-family: 'hoon';
     font-size: 215%;
   }
   body::-webkit-scrollbar{
@@ -17,8 +17,15 @@
   }
 
 /* 폰트 디자인(정렬 등) */
-  h1  { font-family: Viner Hand ITC;
+@font-face{
+  src: url("./font/hoon.TTF");
+  font-family: "hoon";
+}
+  h1  { font-family: 'Rubik',;
         text-align: center; }
+  label{
+    text-align: center;
+  }
   h2  { text-align: center; }
   h5  { text-align: left; }
   h6  { font-size: 50%;
