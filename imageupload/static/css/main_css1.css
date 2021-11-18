@@ -3,7 +3,7 @@
     background-color: rgb(20, 20, 22);
     background-repeat: no-repeat;
     color: white;
-    font-family: 'hoon';
+    font-family: 'Rubik';
     font-size: 215%;
   }
   body::-webkit-scrollbar{
@@ -17,13 +17,11 @@
   }
 
 /* 폰트 디자인(정렬 등) */
-@font-face{
-  src: url("./font/hoon.TTF");
-  font-family: "hoon";
-}
+
   h1  { font-family: 'Rubik',;
         text-align: center; }
   label{
+    font-family: 'Rubik',;
     text-align: center;
   }
   h2  { text-align: center; }
@@ -104,7 +102,7 @@
     border: .5px solid rgb(20,20,22,0);
   }
 .temp {
-    width:1200px;
+    width:800px;
 
     margin:0 auto;
 }
