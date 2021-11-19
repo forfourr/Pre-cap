@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <title>Image Upload</title>
     <link  rel="stylesheet" href="{{ url_for('static', filename='css/main_css1.css') }}">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main49.js') }}"></script>
 
 
@@ -28,7 +26,7 @@
                             <label class="lb_temp1" for="ex_file">사진선택</label>
 							<input type='file' id='ex_file' name='file' onchange="readURL(this);"/>
 							<label class="lb_temp2" for="show_type">타입보기</label>
-							<input type="button" id='show_type' name="show_type"/>
+							<input type="button" id='show_type' name="show_type" />
 
 						</div>
 
@@ -61,7 +59,7 @@
 						<font style="font-size: 80%;"><b>당신의 피부 측색 결과 <b>XX.X% 정확도로</b><br><span class="pc-type-result-span">''</span>입니다.</b></font>
 					</div>
 
-             </div>
+
              </br>
              </br>
 
@@ -69,6 +67,13 @@
 
     </div>
 
+        <footer>
+            <div class="buttonbox">
+<!--               <label for="button_1" style="background-color:rgb(20,20,22);background-image: url(img/icon-face-80.png);background-repeat:no-repeat;background-position: center;"></label>-->
+               <label for="button_1" style="background-color:rgb(20,20,22);background-image: url({{url_for('static', filename='img/icon-face-80.png')}});background-repeat:no-repeat;background-position: center;"></label>
+               <button id='button_1' onclick="window.location.href='http://127.0.0.1:8080/main_style'" ></button>
+            </div>
+        </footer>
     </body>
 </html>
 

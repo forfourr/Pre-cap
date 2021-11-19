@@ -8,9 +8,15 @@ if(navigator.platform){
         document.getElementById("cssLink").href="../static/css/main_web.css";
     }
 }
-
-
-
+var target = document.getElementById('#show_type').click();
+function show() {
+    document.getElementById()
+    $('#jb-wide-contents-type').css('display', 'block');
+    $('#pc-type-result').css('display', 'block');
+    $('#jb-wide-contents-type').css('background-color', hexColor);
+    $('.pc-type-result-span').html(data.pctype);
+    $('#pc-type-result-span').html(data.pctype);
+}
 
 function readURL(input){
     if(input.files && input.files[0]) {
@@ -26,8 +32,8 @@ function readURL(input){
     }
 }
 
-$(function() {
-    $('#show_type').click(function() {
+$(function dd() {
+    ('#show_type').click(function() {
         if($('#image_section').css('display')=='block') {
             var form_data = new FormData($('#file_form')[0]);
 
