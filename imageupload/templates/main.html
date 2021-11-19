@@ -17,7 +17,7 @@
             <h1>Show Me The Color</h1>
         </div>
     </div>
-    <br><br><br><br><br>
+    <br><br><br><br>
 <body>
     <div id="'container">
          <fieldset id="jb-layer">
@@ -29,6 +29,7 @@
 							<input type='file' id='ex_file' name='file' onchange="readURL(this);"/>
 							<label class="lb_temp2" for="show_type">타입보기</label>
 							<input type="button" id='show_type' name="show_type"/>
+
 
 						</div>
 
@@ -43,8 +44,8 @@
                     </div>
                  </form>
                  <!-- 받아온 사진 띄우기 -->
-                 <p style="text-align : center;">
-                    <img style="margin-left:auto; margin-right: auto;" id="image_section" src="#" alt="img" style="width:60%; height: auto;"/>
+                 
+                    <img id="image_section" src="#" alt="img" style="width:60%; height: auto;"/>
                 </div>
 
                  <!-- 얼굴 측색 RGB 받아오기 -->
@@ -53,8 +54,37 @@
 						<hr color="white" size=5 style="margin-top: 50px;"/>
 						<h2 id="pc-type-result-span" style="letter-spacing:4px">WARM SPRING BRIGHT</h2>
 						<hr color="white" size=5 style="margin-bottom: -50px;"/>
+                 
                  </div>
+<!--
+                 <div class="type_button">
+                    <button id='btn-upload' class="button1 white selected" onfocus="this.blur();">타입 보기</button>
+               </div>
+            
+               <div class="total_type">
+                   <div class="type_text">타입</div>
+                   <div class="type_result"> 당신의 타입은 겨울 쿨 light 입니다.</div>
+               </div>
+            
+   
+               <div class="total_recommend">
+                   <div class="recommend_text">추천 색상</div>
+                   <div class="color_form">
+                       <div class="recommend_color" style="background-color:#1A4563">#1A4563</div>
+                       <div class="recommend_color" style="background-color:#5BA397">#5BA397</div>
+                       <div class="recommend_color" style="background-color:#2D3A7D">#2D3A7D</div>
+                       <div class="recommend_color" style="background-color:#10633A">#10633A</div>
+                       <div class="recommend_color" style="background-color:#63103A">#63103A</div>
+                   </div>
+               </div>
+           </div>
+           -->
+   
+   
+       </body>
+   </html>
 
+  </fieldset>
                  <br>
 					<br>
 					<div id="pc-type-result">
@@ -69,9 +99,10 @@
 
     </div>
 
+ 
+
     </body>
 </html>
-
 
 <!--
 <!DOCTYPE html>

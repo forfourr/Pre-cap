@@ -7,6 +7,7 @@ if(navigator.platform){
     }
 }
 
+
 function menu2(){
     if($('#image_section').css('display') == 'block' && $('jb-wide-contents-type').css('background-color') != 'rgb(20, 20, 22)'){
 //        location.href = "http://ec2-13-209-69-114.ap-northeast-2.compute.amazonaws.com:8080/color_recommnd"
