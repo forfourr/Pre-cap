@@ -238,6 +238,7 @@
     margin-left:auto;
     margin-right:auto;
     display:none;
+    text-align : center;
   }
 
   pc-type-result {
