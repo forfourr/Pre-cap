@@ -1,71 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Image Upload</title>
-    <link  rel="stylesheet" href="{{ url_for('static', filename='css/main_css1.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main49.js') }}"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Image Upload</title>
+        <link  rel="stylesheet" href="{{ url_for('static', filename='css/main_css1.css') }}">
 
 
 
-</head>
-    <div id="jb-header">
-        <div>
-            <h1>Show Me The Color</h1>
+
+
+    </head>
+
+
+    <body>
+        <div id="jb-header">
+            <div>
+                <h1>Show Me The Color</h1>
+            </div>
         </div>
-    </div>
-    <br><br><br><br><br>
-<body>
-    <div id="'container">
-         <fieldset id="jb-layer">
-             <div id="'jb-wide contents">
-                 <form name = "img_type_summary" id="file_form" action = "http://127.0.0.1:8080/" method = "POST" enctype="multipart/form-data">
-						<div class="filebox">
-                            <!-- 사진입력 버튼&타입보기 -->
-                            <label class="lb_temp1" for="ex_file">사진선택</label>
-							<input type='file' id='ex_file' name='file' onchange="readURL(this);"/>
-							<label class="lb_temp2" for="show_type">타입보기</label>
-							<input type="button" id='show_type' name="show_type" />
+        <div id="'container">
+             <fieldset id="jb-layer">
+                 <div id="'jb-wide contents">
+                    <form name = "img_type_summary" id="file_form" action = "http://127.0.0.1:8080/" method = "POST" enctype="multipart/form-data">
+                            <div class="filebox">
+                                <!-- 사진입력 버튼&타입보기 -->
+                                <label class="lb_temp1" for="ex_file">사진선택</label>
+                                <input type='file' id='ex_file' name='file' onchange="readURL(this);"/>
 
-						</div>
 
-                     <h2 style="margin-bottom: -1%;">Guide</h2></br>
-                    <div class="temp">
-                        <p>
-                        1. 흰색 배경의 형광등 아래에서 찍은 사진 권장</br></br>
-                        2. 안경 등으로 얼굴이 가려지지 않은 사진 권장</br></br>
-                        3. 모바일이 아닐 경우 창크기를 최대로 권장</br></br>
-                        </p>
+                                <script>
+                                function readImage(input) {
+                                // 인풋 태그에 파일이 있는 경우
+                                if(input.files && input.files[0]) {
+                                // 이미지 파일인지 검사 (생략)
+                                // FileReader 인스턴스 생성
+                                const reader = new FileReader()
 
+                                // 이미지가 로드가 된 경우
+                                reader.onload = e => {
+                                    const previewImage = document.getElementById("image_section")
+                                    previewImage.src = e.target.result
+                                }
+
+                                // reader가 이미지 읽도록 하기
+                                reader.readAsDataURL(input.files[0])
+                                    }
+                                }
+
+                                // input file에 change 이벤트 부여
+                                const inputImage = document.getElementById("ex_file")
+                                inputImage.addEventListener("change", e => {
+                                    readImage(e.target)
+                                })
+                                </script>
+
+                                <script>
+                                function show(){
+                                    document.getElementById("jb-wide-contents-type").style.display = "block";
+                                    document.getElementById("pc-type-result").style.display = "block";
+                                }
+                                </script>
+
+                                <label class="lb_temp2" for="show_type">타입보기</label>
+                                <input type="button" id='show_type' name="show_type" onclick="show();"/>
+
+
+                            </div>
+
+                        <h2 style="margin-bottom: -1%;">Guide</h2>
+                        <div class="temp">
+                            <p>
+                            1. 흰색 배경의 형광등 아래에서 찍은 사진 권장</br>
+                            2. 안경 등으로 얼굴이 가려지지 않은 사진 권장</br>
+                            3. 모바일이 아닐 경우 창크기를 최대로 권장</br>
+                            </p>
+                        </div>
+                     </form>
+                     <!-- 받아온 사진 띄우기 -->
+                     <img style="margin-left:auto; margin-right: auto;" id="image_section" src="#" alt="img" style="width:60%; height: auto;"/>
+
+
+                     <script>
+                        function show_color_recommend(){
+                            document.getElementById("total_recommend").style.display = "block";
+                        }
+                     </script>
+                     <!-- 얼굴 측색 RGB 받아오기 -->
+                     <!-- 퍼스널 컬러 타입 받아오기 -->
+                     <div id="jb-wide-contents-type" style="background-color:rgb(122, 153, 211)" >
+                            <hr color="white" size=5 style="margin-top: 50px;"/>
+                            <h2 class="pc-type-result-span" style="letter-spacing:4px" >WARM SPRING</h2>
+                            <input type="button" id="pc-type-result-span" onclick="show_color_recommend();">
+                            <hr color="white" size=5 style="margin-bottom: -50px;"/>
+                     </div>
+
+                     <br>
+                     <br>
+                        <div id="pc-type-result">
+                            <font style="font-size: 80%;"><b>당신의 피부 측색 결과 <b>XX.X% 정확도로</b><br><span class="pc-type-result-span">''</span>입니다.</b></font>
+                        </div>
+                     <div class="total_recommend">
+                        <div class="recommend_text">추천 색상</div>
+                        <div class="color_form">
+                            <div class="recommend_color" style="background-color:#1A4563">#1A4563</div>
+                            <div class="recommend_color" style="background-color:#5BA397">#5BA397</div>
+                            <div class="recommend_color" style="background-color:#2D3A7D">#2D3A7D</div>
+                            <div class="recommend_color" style="background-color:#10633A">#10633A</div>
+                            <div class="recommend_color" style="background-color:#63103A">#63103A</div>
+                        </div>
                     </div>
-                 </form>
-                 <!-- 받아온 사진 띄우기 -->
-                 <p style="text-align : center;">
-                    <img style="margin-left:auto; margin-right: auto;" id="image_section" src="#" alt="img" style="width:60%; height: auto;"/>
-                </div>
 
-                 <!-- 얼굴 측색 RGB 받아오기 -->
-                 <!-- 퍼스널 컬러 타입 받아오기 -->
-                 <div id="jb-wide-contents-type" style="background-color:rgb(122, 153, 211)">
-						<hr color="white" size=5 style="margin-top: 50px;"/>
-						<h2 id="pc-type-result-span" style="letter-spacing:4px">WARM SPRING BRIGHT</h2>
-						<hr color="white" size=5 style="margin-bottom: -50px;"/>
+
+
                  </div>
+                 </br>
+				 </br>
+             </fieldset>
 
-                 <br>
-					<br>
-					<div id="pc-type-result">
-						<font style="font-size: 80%;"><b>당신의 피부 측색 결과 <b>XX.X% 정확도로</b><br><span class="pc-type-result-span">''</span>입니다.</b></font>
-					</div>
+        </div>
 
-
-             </br>
-             </br>
-
-         </fieldset>
-
-    </div>
 
         <footer>
             <div class="buttonbox">

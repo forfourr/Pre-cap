@@ -21,34 +21,31 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         f.save(f'static/uploads/{secure_filename(f.filename)}')
-        return render_template('main_style.html')
-        img_pil = Image.open(f).convert("RGB")  ## PIL Image
-        img_cv = np.array(img_pil)
-        img_cv = img_cv[:, :, ::-1].copy()  ## RGB  ## CV Image
+        return render_template('main.html')
 
-        face_img = face_detection(img_cv)
-        # img_cv_bgr = cv.cvtColor(img_cv, cv.COLOR_RGB2BGR)
-        # face_img = face_detection(img_cv_bgr)
-        if np.array_equal(face_img, [0, 0, 0]):
-            print(face_img)
-            print("에러")
-            return jsonify({"pctype": 'error'})
-        else:
-            success, img_cv_binary = cv.imencode('.jpg', img_cv)  ## Binary Image
-            # plt.imshow(img_cv)
-            # plt.show()
-            print(success)
-            if success:
-                # img_db_save(img_cv_binary.tostring())
-                ext_img = skin_extract(face_img)
-                hsv, rgb = color_convert(ext_img)
-                result = color_classifier(hsv)  # <<<<<<<<<<<---------------------------algorithm 수정부위
 
-        print(result)
-        print(color_type[result])
-        result = {"pctype": color_type[result], "rgb_value": rgb}
-        return jsonify(result)
+############# menu2
+@app.route("/color_recommnd")
+def color_recommnd():
+    global rgb
+    if len(rgb) == 3:
+        rgb_value = rgb
+        print(rgb_value)
+        hsv = color_convert_hsv(rgb_value)
+        print(hsv)
+        hsv_palette_bright = CP.palette_bright(hsv)
+        hsv_palette_harmony = CP.palette_harmony(hsv)
 
+        rgb_palette_bright = CP.to_rgb(hsv_palette_bright)
+        rgb_palette_harmony = CP.to_rgb(hsv_palette_harmony)
+
+        data = {"bright": rgb_palette_bright, "harmony": rgb_palette_harmony}
+        print(data['bright'][0])
+        print(data['harmony'][0])
+        return render_template('CAI_palette.html', data=json.dumps(data))
+    else:
+        print("rgb값 없음")
+        return render_template('CAI_palette.html')
 
 
 
