@@ -192,8 +192,50 @@
     clip:rect(0,0,0,0);
     border: 0;
   }
-  .buttonbox label {
-    display: inline-block;
+
+  #button_box{
+    position : absolute;
+    text-align : center;
+    width : 90%
+    margin-left : 10%;
+    margin-righ : 10%;
+    border : 1px solid black;
+  }
+
+  .button_form label {
+    position: absolute;
+    float:left
+    width: 30.3%;
+    height: 55px;
+    padding: .7em .5em;
+    margin: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+    font-size: 100%;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color:rgb(40,40,44);
+    background-repeat:no-repeat;
+    background-position: center;
+  }
+
+ .button_form input { /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+  }
+
+
+
+
+  #buttonbox{
+    display: none;
     width: 30.3%;
     height: 55px;
     padding: .7em .5em;
@@ -252,10 +294,9 @@
   }
   
 
-  .jb-wide-contents-type{
+
+  #jb-wide-contents-type{
     display:none;
-
-
     border: .5px;
   }
 
@@ -272,31 +313,34 @@
 <!--        border : 1px solid black;-->
     }
 
-    div.total_recommend{
+ #total_recommend{
+        position : absolute;
+        text-align : center;
         display:none;
         width : 90%
         margin-left : auto;
         margin-right : auto;
-<!--        border : 1px solid black;-->
-    }
-    .recommend_text {
+        border : 1px solid black;
+ }
+ #recommend_text {
         width : 50%;
+        text-align : center;
         margin-left : auto;
         margin-right : auto;
-<!--        border : 1px solid black;-->
-    }
+        border : 1px solid black
+ }
 
-    .color_form {
+ .color_form {
         display : flex;
         width : 80%;
         margin-left : auto;
         margin-right : auto;
 <!--        border : 1px solid black-->
-    }
-    .recommend_color {
+ }
+ .recommend_color {
         width : 19%;
         height: 100px;
         margin-left : auto;
         margin-right : auto;
 <!--        border : 1px solid red;-->
-    }
+ }

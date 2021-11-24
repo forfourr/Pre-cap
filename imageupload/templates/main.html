@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <title>Image Upload</title>
         <link  rel="stylesheet" href="{{ url_for('static', filename='css/main_css1.css') }}">
-
-
-
-
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+				integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+				crossorigin="anonymous"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/main49.js') }}"></script>
 
     </head>
 
@@ -58,6 +58,7 @@
                                 function show(){
                                     document.getElementById("jb-wide-contents-type").style.display = "block";
                                     document.getElementById("pc-type-result").style.display = "block";
+                                    document.getElementById("button_box").style.display = "block";
                                 }
                                 </script>
 
@@ -77,20 +78,33 @@
                         </div>
                      </form>
                      <!-- 받아온 사진 띄우기 -->
-                     <img style="margin-left:auto; margin-right: auto;" id="image_section" src="#" alt="img" style="width:60%; height: auto;"/>
-
+                     <img  id="image_section" src="#" alt="img"/>
 
                      <script>
-                        function show_color_recommend(){
+
+                        function show_color(){
                             document.getElementById("total_recommend").style.display = "block";
                         }
                      </script>
+
+
+                     <div id="button_box">
+                         <div class="button_form">
+                             <label class="eye" for="eye" style= "background-color:rgb(20,20,22);background-image: url({{url_for('static', filename='img/icon-face-80.png')}});background-repeat:no-repeat;background-position: center;" ></label>
+                             <input type='button'  id="eye" name="eye" onclick="show_color();"/>
+                             <label class="lip" for="lip" style= "background-color:rgb(20,20,22);background-image: url({{url_for('static', filename='img/icon-face-80.png')}});background-repeat:no-repeat;background-position: center;" ></label>
+                             <input type='button'  id="lip" name="lip" onclick="show_color();"/>
+                             <label class="hair" for="hair" style= "background-color:rgb(20,20,22);background-image: url({{url_for('static', filename='img/icon-face-80.png')}});background-repeat:no-repeat;background-position: center;" ></label>
+                             <input type='button'  id="hair" name="hair" onclick="show_color();"/>
+                         </div>
+                     </div>
+
+
                      <!-- 얼굴 측색 RGB 받아오기 -->
                      <!-- 퍼스널 컬러 타입 받아오기 -->
                      <div id="jb-wide-contents-type" style="background-color:rgb(122, 153, 211)" >
                             <hr color="white" size=5 style="margin-top: 50px;"/>
                             <h2 class="pc-type-result-span" style="letter-spacing:4px" >WARM SPRING</h2>
-                            <input type="button" id="pc-type-result-span" onclick="show_color_recommend();">
                             <hr color="white" size=5 style="margin-bottom: -50px;"/>
                      </div>
 
@@ -99,34 +113,27 @@
                         <div id="pc-type-result">
                             <font style="font-size: 80%;"><b>당신의 피부 측색 결과 <b>XX.X% 정확도로</b><br><span class="pc-type-result-span">''</span>입니다.</b></font>
                         </div>
-                     <div class="total_recommend">
-                        <div class="recommend_text">추천 색상</div>
-                        <div class="color_form">
-                            <div class="recommend_color" style="background-color:#1A4563">#1A4563</div>
-                            <div class="recommend_color" style="background-color:#5BA397">#5BA397</div>
-                            <div class="recommend_color" style="background-color:#2D3A7D">#2D3A7D</div>
-                            <div class="recommend_color" style="background-color:#10633A">#10633A</div>
-                            <div class="recommend_color" style="background-color:#63103A">#63103A</div>
-                        </div>
-                    </div>
-
-
 
                  </div>
                  </br>
 				 </br>
+                 <div id="total_recommend">
+                    <div id="recommend_text">추천 색상</div>
+                    <div class="color_form">
+                        <div class="recommend_color" style="background-color:#1A4563">#1A4563</div>
+                        <div class="recommend_color" style="background-color:#5BA397">#5BA397</div>
+                        <div class="recommend_color" style="background-color:#2D3A7D">#2D3A7D</div>
+                        <div class="recommend_color" style="background-color:#10633A">#10633A</div>
+                        <div class="recommend_color" style="background-color:#63103A">#63103A</div>
+                    </div>
+                </div>
              </fieldset>
 
         </div>
-
-
         <footer>
-            <div class="buttonbox">
-<!--               <label for="button_1" style="background-color:rgb(20,20,22);background-image: url(img/icon-face-80.png);background-repeat:no-repeat;background-position: center;"></label>-->
-               <label for="button_1" style="background-color:rgb(20,20,22);background-image: url({{url_for('static', filename='img/icon-face-80.png')}});background-repeat:no-repeat;background-position: center;"></label>
-               <button id='button_1' onclick="window.location.href='http://127.0.0.1:8080/main_style'" ></button>
-            </div>
+
         </footer>
+
     </body>
 </html>
 
