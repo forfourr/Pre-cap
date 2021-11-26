@@ -1,21 +1,72 @@
+import cv2
+import math
+import numpy as np
 # coding: utf-8
 # import the necessary packages
 from imutils import face_utils
-import numpy as np
-import math
 import dlib
-import cv2
 import matplotlib.pyplot as plt
 import sys
+import numpy as np
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from skimage import io
 from itertools import compress
 from scipy.spatial import distance
 import copy
 import operator
-from imutils import face_utils
-from numpy.lib.function_base import percentile
+
+class white_balance:
+    def apply_mask(matrix, mask, fill_value):
+        masked = np.ma.array(matrix, mask=mask, fill_value=fill_value)
+        return masked.filled()
+
+    def apply_threshold(matrix, low_value, high_value):
+        low_mask = matrix < low_value
+        matrix = apply_mask(matrix, low_mask, low_value)
+
+        high_mask = matrix > high_value
+        matrix = apply_mask(matrix, high_mask, high_value)
+
+        return matrix
+
+    def balancing(img, percent):
+        assert img.shape[2] == 3
+        assert percent > 0 and percent < 100
+
+        half_percent = percent / 200.0
+
+        channels = cv2.split(img)
+
+        out_channels = []
+        for channel in channels:
+            assert len(channel.shape) == 2
+            # find the low and high precentile values (based on the input percentile)
+            height, width = channel.shape
+            vec_size = width * height
+            flat = channel.reshape(vec_size)
+
+            assert len(flat.shape) == 1
+
+            flat = np.sort(flat)
+
+            n_cols = flat.shape[0]
+
+            low_val = flat[math.floor(n_cols * half_percent)]
+            high_val = flat[math.ceil(n_cols * (1.0 - half_percent))]
+
+            print("Lowval: ", low_val)
+            print("Highval: ", high_val)
+
+            # saturate below the low percentile and above the high percentile
+            thresholded = apply_threshold(channel, low_val, high_val)
+            # scale the channel
+            normalized = cv2.normalize(thresholded, thresholded.copy(), 0, 255, cv2.NORM_MINMAX)
+            out_channels.append(normalized)
+        out = cv2.merge(out_channels)
+        cv2.imwrite("wb.jpg", out)
+        return out
 
 
 
@@ -31,7 +82,7 @@ class DetectFace:
         # face detection part
         self.img = cv2.imread(image)
         # if self.img.shape[0]>500:
-        #    self.img = cv2.resize(self.img, dsize=(0,0), fx=0.8, fy=0.8)
+        #  self.img = cv2.resize(self.img, dsize=(0,0), fx=0.8, fy=0.8)
 
         # init face parts
         self.right_eyebrow = []
@@ -61,18 +112,28 @@ class DetectFace:
         for (name, (i, j)) in face_utils.FACIAL_LANDMARKS_IDXS.items():
             face_parts[idx] = shape[i:j]
             idx += 1
-        face_parts = face_parts[1:5]
+        face_parts = face_parts[1:6]
         # set the variables
         # Caution: this coordinates fits on the RESIZED image.
-        self.right_eyebrow = self.extract_face_part(face_parts[0])
+        self.right_eyebrow = self.extract_face_part(face_parts[2])
         # cv2.imshow("right_eyebrow", self.right_eyebrow)
         # cv2.waitKey(0)
         self.left_eyebrow = self.extract_face_part(face_parts[1])
-        self.right_eye = self.extract_face_part(face_parts[2])
-        self.left_eye = self.extract_face_part(face_parts[3])
+        # cv2.imshow("right_eyebrow", self.left_eyebrow)
+        # cv2.waitKey(0)
+        self.right_eye = self.extract_face_part(face_parts[3])
+        # cv2.imshow("right_eyebrow", self.right_eye)
+        # cv2.waitKey(0)
+        self.left_eye = self.extract_face_part(face_parts[4])
+        # cv2.imshow("right_eyebrow", self.left_eye)
+        # cv2.waitKey(0)
         # Cheeks are detected by relative position to the face landmarks
         self.left_cheek = self.img[shape[29][1]:shape[33][1], shape[4][0]:shape[48][0]]
+        # cv2.imshow("right_eyebrow", self.left_cheek)
+        # cv2.waitKey(0)
         self.right_cheek = self.img[shape[29][1]:shape[33][1], shape[54][0]:shape[12][0]]
+        # cv2.imshow("right_eyebrow", self.right_cheek)
+        # cv2.waitKey(0)
 
     # parameter example : self.right_eye
     # return type : image
@@ -153,6 +214,7 @@ class DominantColors:
         plt.show()
 
         return colors
+
 class tone_analysis:
     def is_warm(lab_b, a):
         '''
@@ -171,11 +233,11 @@ class tone_analysis:
         body_part = ['skin', 'eyebrow', 'eye']
         for i in range(3):
             warm_dist += abs(lab_b[i] - warm_b_std[i]) * a[i]
-            # print(body_part[i],"의 warm 기준값과의 거리")
-            # print(abs(lab_b[i] - warm_b_std[i]))
+            print(body_part[i], "의 warm 기준값과의 거리")
+            print(abs(lab_b[i] - warm_b_std[i]))
             cool_dist += abs(lab_b[i] - cool_b_std[i]) * a[i]
-            # print(body_part[i],"의 cool 기준값과의 거리")
-            # print(abs(lab_b[i] - cool_b_std[i]))
+            print(body_part[i], "의 cool 기준값과의 거리")
+            print(abs(lab_b[i] - cool_b_std[i]))
         if (warm_dist <= cool_dist):
             return 1  # warm
         else:
@@ -237,56 +299,4 @@ class tone_analysis:
             return 1  # summer
         else:
             return 0  # winter
-
-
-
-class Whitening :
-
-    def apply_mask(matrix, mask, fill_value):
-        masked = np.ma.array(matrix, mask=mask, fill_value=fill_value)
-        return masked.filled()
-
-    def apply_threshold(self, matrix, low_value, high_value):
-        low_mask = matrix < low_value
-        matrix = self.apply_mask(matrix, low_mask, low_value)
-
-        high_mask = matrix > high_value
-        matrix = self.apply_mask(matrix, high_mask, high_value)
-        return matrix
-
-    def balancing(img, percent):
-        assert img.shape[2] == 3
-        assert percent > 0 and percent < 100
-
-        half_percent = percent / 200.0
-
-        channels = cv2.split(img)
-
-        out_channels = []
-        for channel in channels:
-            assert len(channel.shape) == 2
-            #find the low and high precentile values (based on the input percentile)
-            height, width = channel.shape
-            vec_size = width * height
-            flat = channel.reshape(vec_size)
-
-            assert len(flat.shape) == 1
-            flat = np.sort(flat)
-            n_cols = flat.shape[0]
-            low_val  = flat[math.floor(n_cols * half_percent)]
-            high_val = flat[math.ceil( n_cols * (1.0 - half_percent))]
-
-            print("Lowval: ", low_val)
-            print("Highval: ", high_val)
-
-            # saturate below the low percentile and above the high percentile
-            thresholded = apply_threshold(channel, low_val, high_val)
-            # scale the channel
-            normalized = cv2.normalize(thresholded, thresholded.copy(), 0, 255, cv2.NORM_MINMAX)
-            out_channels.append(normalized)
-        out = cv2.merge(out_channels)
-        cv2.imshow("before",img)
-        cv2.imshow("after",out)
-
-        return out
 

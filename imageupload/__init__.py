@@ -26,9 +26,9 @@ def upload_file():
         f = request.files['file']
         f.save(f'static/uploads/{secure_filename(f.filename)}')
         img = Image.open(f)
-        Personal_color.analysis(img)
+        tone = Personal_color.analysis(img)
 
-        return render_template('main.html',tone = Personal_color.tone)
+        return render_template('main.html',tone = tone)
 
 
 
