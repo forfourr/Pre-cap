@@ -8,9 +8,7 @@
 				integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 				crossorigin="anonymous"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/main49.js') }}"></script>
-        <script>
-            var tone = {{tone|tojson}}
-        </script>
+
     </head>
 
 
@@ -23,7 +21,7 @@
         <div id="'container">
              <fieldset id="jb-layer">
                  <div id="'jb-wide contents">
-                    <form name = "img_type_summary" id="file_form" action = "http://127.0.0.1:8080/" method = "POST" enctype="multipart/form-data">
+                    <form name = "img_type_summary" id="file_form" action = "http://127.0.0.1:8080/Upload" method = "POST" enctype="multipart/form-data">
                             <div class="filebox">
                                 <!-- 사진입력 버튼&타입보기 -->
                                 <label class="lb_temp1" for="ex_file">Upload Photo</label>
@@ -91,21 +89,26 @@
                      </script>
 
 
+
+
                     
 
 
                      <!-- 얼굴 측색 RGB 받아오기 -->
                      <!-- 퍼스널 컬러 타입 받아오기 -->
-                     <div id="jb-wide-contents-type" style="background-color:rgb(122, 153, 211)" >
+
+                        <div id="jb-wide-contents-type" style="background-color:rgb(122, 153, 211)" >
                             <hr color="white" size=5 style="margin-top: 50px;"/>
                             <h2 class="pc-type-result-span" style="letter-spacing:4px" >{{tone}}</h2>
                             <hr color="white" size=5 style="margin-bottom: -50px;"/>
-                     </div>
+                        </div>
+
+
 
                      <br>
                      <br>
                         <div id="pc-type-result">
-                          
+
                             <input type="button" value="추천 색 보기" id="color_recommend" onclick="show_color();"></input>
                  </div>
                  </br>
