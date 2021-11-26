@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify, json
 from werkzeug.utils import secure_filename
-
-
+import cv2
+import numpy as np
+import ShowColor
+import argparse
+import os
+from PIL import Image
 app = Flask(__name__)
-
+from Personal_color import analysis
 
 @app.route("/")
 def hello():
@@ -21,31 +25,10 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         f.save(f'static/uploads/{secure_filename(f.filename)}')
-        return render_template('main.html')
+        img = Image.open(f)
+        Personal_color.analysis(img)
 
-
-############# menu2
-@app.route("/color_recommnd")
-def color_recommnd():
-    global rgb
-    if len(rgb) == 3:
-        rgb_value = rgb
-        print(rgb_value)
-        hsv = color_convert_hsv(rgb_value)
-        print(hsv)
-        hsv_palette_bright = CP.palette_bright(hsv)
-        hsv_palette_harmony = CP.palette_harmony(hsv)
-
-        rgb_palette_bright = CP.to_rgb(hsv_palette_bright)
-        rgb_palette_harmony = CP.to_rgb(hsv_palette_harmony)
-
-        data = {"bright": rgb_palette_bright, "harmony": rgb_palette_harmony}
-        print(data['bright'][0])
-        print(data['harmony'][0])
-        return render_template('CAI_palette.html', data=json.dumps(data))
-    else:
-        print("rgb값 없음")
-        return render_template('CAI_palette.html')
+        return render_template('main.html',tone = Personal_color.tone)
 
 
 
